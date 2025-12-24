@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technodom.kz - Новогодние акции</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Базовые сбросы и настройки */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #fffaf5 0%, #ffffff 100%);
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Новогодние снежинки */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Мерцающие огоньки */
+        .lights {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .light {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: #FF6B00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px #FF6B00;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Шапка в стиле Tilda */
+        .tilda-header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 15px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 107, 0, 0.1);
+        }
+
+        .tilda-header.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tilda-logo {
+            flex: 0 0 auto;
+        }
+
+        .tilda-logo img {
+            height: 38px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+        .tilda-nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .tilda-nav ul {
+            display: flex;
+            gap: 40px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tilda-nav li {
+            position: relative;
+        }
+
+        .tilda-nav a {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 15px;
+            color: #333;
+            text-decoration: none;
+            padding: 8px 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tilda-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #FF6B00;
+            transition: width 0.3s ease;
+        }
+
+        .tilda-nav a:hover {
+            color: #FF6B00;
+        }
+
+        .tilda-nav a:hover::after {
+            width: 100%;
+        }
+
+        .tilda-contacts {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .hotline-tilda {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            color: #FF6B00;
+            padding: 8px 15px;
+            background: rgba(255, 107, 0, 0.1);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .hotline-tilda:hover {
+            background: rgba(255, 107, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .city-selector-tilda {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            padding: 8px 15px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .city-selector-tilda:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: #333;
+        }
+
+        /* Герой блок с новогодней анимацией */
+        .hero-tilda {
+            padding: 150px 0 100px;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(255, 245, 235, 0.9) 0%,
+                rgba(255, 250, 245, 0.7) 50%,
+                rgba(255, 255, 255, 0.9) 100%);
+            z-index: -1;
+        }
+
+        .hero-content-tilda {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            flex: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .new-year-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #FF6B00, #FF8C42);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 12px 25px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 25px rgba(255, 107, 0, 0.4);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
+            }
+        }
+
+        .hero-title-tilda {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #222;
+            position: relative;
+        }
+
+        .hero-title-tilda .highlight {
+            color: #FF6B00;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-title-tilda .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 107, 0, 0.2);
+            z-index: -1;
+            animation: highlightSlide 3s ease-in-out infinite;
+        }
+
+        @keyframes highlightSlide {
+            0%, 100% {
+                transform: scaleX(1);
+            }
+            50% {
+                transform: scaleX(1.1);
+            }
+        }
+
+        .hero-subtitle-tilda {
+            font-size: 1.25rem;
+            color: #666;
+            margin-bottom: 30px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .price-tag {
+            background: white;
+            padding: 25px 35px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 107, 0, 0.1);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .price-main {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 3rem;
+            color: #222;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .price-label {
+            font-size: 1rem;
+            color: #888;
+            display: block;
+        }
+
+        .hero-image-tilda {
+            flex: 1;
+            position: relative;
+            animation: fadeInRight 1s ease-out 0.3s both;
+        }
+
+        .phone-container {
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .phone-img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
+            transform-style: preserve-3d;
+            animation: phoneFloat 4s ease-in-out infinite;
+            border-radius: 30px;
+        }
+
+        @keyframes phoneFloat {
+            0%, 100% {
+                transform: translateY(0) rotateY(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotateY(5deg);
+            }
+            75% {
+                transform: translateY(-5px) rotateY(-5deg);
+            }
+        }
+
+        /* Форма в стиле Tilda */
+        .lead-form-tilda {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 107, 0, 0.1);
+            animation: slideInUp 0.8s ease-out 0.5s both;
+        }
+
+        .lead-form-tilda::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FF6B00, #FF8C42);
+            animation: progress 3s ease-in-out infinite;
+        }
+
+        @keyframes progress {
+            0%, 100% {
+                width: 0%;
+                left: 0;
+            }
+            50% {
+                width: 100%;
+                left: 0;
+            }
+            100% {
+                width: 0%;
+                left: 100%;
+            }
+        }
+
+        .form-title-tilda {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #222;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .form-group-tilda {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-input-tilda {
+            width: 100%;
+            padding: 18px 25px;
+            border: 2px solid #eee;
+            border-radius: 15px;
+            font-size: 16px;
+            font-family: 'Roboto', sans-serif;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        .form-input-tilda:focus {
+            outline: none;
+            border-color: #FF6B00;
+            background: white;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-input-tilda::placeholder {
+            color: #999;
+        }
+
+        .btn-tilda {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #FF6B00, #FF8C42);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-tilda::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-tilda:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-tilda:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 0, 0.4);
+        }
+
+        .btn-tilda:active {
+            transform: translateY(-1px);
+        }
+
+        .form-notice-tilda {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 20px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .form-notice-tilda a {
+            color: #FF6B00;
+            text-decoration: none;
+            border-bottom: 1px dashed #FF6B00;
+            transition: border-bottom 0.3s;
+        }
+
+        .form-notice-tilda a:hover {
+            border-bottom: 1px solid #FF6B00;
+        }
+
+        /* Анимации появления */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Новогодние украшения */
+        .decoration {
+            position: absolute;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .christmas-ball {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle at 30% 30%, #FF6B00, #ff4500);
+            border-radius: 50%;
+            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .christmas-ball::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: gold;
+            border-radius: 50%;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .header-container,
+            .hero-content-tilda {
+                padding: 0 30px;
+            }
+            
+            .hero-title-tilda {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-content-tilda {
+                flex-direction: column;
+                text-align: center;
+                gap: 40px;
+            }
+            
+            .hero-text {
+                max-width: 600px;
+            }
+            
+            .hero-title-tilda {
+                font-size: 2.5rem;
+            }
+            
+            .phone-img {
+                max-width: 400px;
+            }
+            
+            .tilda-nav ul {
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tilda-header {
+                padding: 12px 0;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 0 20px;
+            }
+            
+            .tilda-nav ul {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .tilda-contacts {
+                gap: 15px;
+            }
+            
+            .hero-content-tilda {
+                padding: 0 20px;
+            }
+            
+            .hero-title-tilda {
+                font-size: 2rem;
+            }
+            
+            .price-main {
+                font-size: 2.5rem;
+            }
+            
+            .lead-form-tilda {
+                padding: 30px 20px;
+            }
+            
+            .hero-tilda {
+                padding: 120px 0 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title-tilda {
+                font-size: 1.8rem;
+            }
+            
+            .new-year-badge {
+                font-size: 12px;
+                padding: 10px 20px;
+            }
+            
+            .tilda-nav ul {
+                gap: 15px;
+                font-size: 14px;
+            }
+            
+            .hotline-tilda,
+            .city-selector-tilda {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Новогодние эффекты -->
+    <div class="snowflakes" id="snowflakes"></div>
+    <div class="lights" id="lights"></div>
+
+    <!-- Шапка в стиле Tilda -->
+    <header class="tilda-header" id="header">
+        <div class="header-container">
+            <div class="tilda-logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlzAZ2nxVOARQabUAfhcfX9J4zKWf5EJ0idQ&s" alt="Technodom Logo">
+                 <img src="https://albato.ru/images/logos/tilda.png" alt="Technodom Logo">
+            </div>
+            <nav class="tilda-nav">
+                <ul>
+                    <li><a href="#">Смартфоны</a></li>
+                    <li><a href="#">Акции</a></li>
+                    <li><a href="#">Магазины</a></li>
+                    <li><a href="#">Техника</a></li>
+                    <li><a href="#">Услуги</a></li>
+                </ul>
+            </nav>
+            <div class="tilda-contacts">
+                <div class="hotline-tilda">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>2300</span>
+                </div>
+                <div class="city-selector-tilda" id="citySelector">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Караганда</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Главный блок -->
+    <section class="hero-tilda">
+        <div class="hero-bg"></div>
+        
+        <!-- Новогодние украшения -->
+        <div class="decoration" style="top: 10%; left: 5%;">
+            <div class="christmas-ball"></div>
+        </div>
+        <div class="decoration" style="top: 15%; right: 10%;">
+            <div class="christmas-ball" style="background: radial-gradient(circle at 30% 30%, #4CAF50, #2E7D32);"></div>
+        </div>
+        <div class="decoration" style="bottom: 20%; left: 8%;">
+            <div class="christmas-ball" style="background: radial-gradient(circle at 30% 30%, #2196F3, #0D47A1);"></div>
+        </div>
+        
+        <div class="hero-content-tilda">
+            <div class="hero-text">
+                <div class="new-year-badge">
+                    <i class="fas fa-gift"></i>
+                    Новый год в Technodom
+                </div>
+                
+                <h1 class="hero-title-tilda">
+                    Подарите себе<br>
+                    <span class="highlight">технологии будущего</span>
+                </h1>
+                
+                <p class="hero-subtitle-tilda">
+                    Самые ожидаемые новинки по специальной новогодней цене. 
+                    Успейте купить до конца праздников!
+                </p>
+                
+                <div class="price-tag">
+                    <div class="price-label">iPhone 15 Pro Max</div>
+                    <div class="price-main">599 990 ₸</div>
+                    <div class="price-label">Вместо 699 990 ₸</div>
+                </div>
+
+                <!-- Форма захвата -->
+                <div class="lead-form-tilda">
+                    <h3 class="form-title-tilda">Получите персональное предложение</h3>
+                    <form id="leadFormTilda" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                        <div class="form-group-tilda">
+                            <input type="email" name="email" class="form-input-tilda" placeholder="Ваш e-mail" required>
+                        </div>
+                        <button type="submit" class="btn-tilda">
+                            <i class="fas fa-gift"></i>
+                            ПОЛУЧИТЬ ПРЕДЛОЖЕНИЕ
+                        </button>
+                    </form>
+                    <p class="form-notice-tilda">
+                        Нажимая кнопку, вы соглашаетесь с 
+                        <a href="#">обработкой персональных данных</a>. 
+                        Предложение ограничено.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="hero-image-tilda">
+                <div class="phone-container">
+                    <img src="https://ltdfoto.ru/images/2025/12/24/TEKST-ABZATA.png" alt="iPhone 15 Pro Max" class="phone-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Снежинки
+        function createSnowflakes() {
+            const snowflakesContainer = document.getElementById('snowflakes');
+            const snowflakeCount = 50;
+            
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                
+                const size = Math.random() * 5 + 2;
+                const startX = Math.random() * 100;
+                const duration = Math.random() * 10 + 10;
+                const delay = Math.random() * 5;
+                
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                snowflake.style.left = `${startX}vw`;
+                snowflake.style.animationDuration = `${duration}s`;
+                snowflake.style.animationDelay = `${delay}s`;
+                snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+                
+                snowflakesContainer.appendChild(snowflake);
+            }
+        }
+
+        // Мерцающие огоньки
+        function createLights() {
+            const lightsContainer = document.getElementById('lights');
+            const lightCount = 30;
+            
+            for (let i = 0; i < lightCount; i++) {
+                const light = document.createElement('div');
+                light.classList.add('light');
+                
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const duration = Math.random() * 2 + 1;
+                const delay = Math.random() * 2;
+                
+                light.style.left = `${x}vw`;
+                light.style.top = `${y}vh`;
+                light.style.animationDuration = `${duration}s`;
+                light.style.animationDelay = `${delay}s`;
+                light.style.opacity = Math.random() * 0.5 + 0.3;
+                
+                // Разноцветные огоньки
+                if (Math.random() > 0.7) {
+                    light.style.backgroundColor = '#4CAF50';
+                    light.style.boxShadow = '0 0 10px 2px #4CAF50';
+                } else if (Math.random() > 0.5) {
+                    light.style.backgroundColor = '#2196F3';
+                    light.style.boxShadow = '0 0 10px 2px #2196F3';
+                }
+                
+                lightsContainer.appendChild(light);
+            }
+        }
+
+        // Плавный скролл для шапки
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Селектор города
+        document.getElementById('citySelector').addEventListener('click', function() {
+            const cities = ['Алматы', 'Астана', 'Караганда', 'Шымкент', 'Актобе', 'Атырау', 'Павлодар'];
+            const currentCity = this.querySelector('span').textContent;
+            const currentIndex = cities.indexOf(currentCity);
+            const nextIndex = (currentIndex + 1) % cities.length;
+            
+            this.querySelector('span').textContent = cities[nextIndex];
+            
+            // Анимация смены города
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 150);
+        });
+
+        // Обработка формы
+        document.getElementById('leadFormTilda').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = this;
+            const button = form.querySelector('button[type="submit"]');
+            const originalText = button.innerHTML;
+            const email = form.querySelector('input[name="email"]').value;
+            
+            // Показать состояние загрузки
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправляем...';
+            button.disabled = true;
+            
+            // Имитация отправки (замените на реальную отправку через Formspree)
+            setTimeout(() => {
+                // Успешная отправка
+                button.innerHTML = '<i class="fas fa-check"></i> Отправлено!';
+                button.style.background = 'linear-gradient(135deg, #4CAF50, #2E7D32)';
+                
+                // Показать сообщение об успехе
+                const successMessage = document.createElement('div');
+                successMessage.style.cssText = `
+                    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                    color: white;
+                    padding: 15px;
+                    border-radius: 10px;
+                    margin-top: 20px;
+                    text-align: center;
+                    animation: fadeInUp 0.5s ease-out;
+                `;
+                successMessage.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Спасибо!</strong> Предложение отправлено на ${email}
+                `;
+                
+                form.parentNode.insertBefore(successMessage, form.nextSibling);
+                
+                // Сбросить форму через 3 секунды
+                setTimeout(() => {
+                    form.reset();
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    button.style.background = '';
+                    successMessage.remove();
+                }, 3000);
+                
+            }, 1500);
+        });
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            createSnowflakes();
+            createLights();
+            
+            // Задержка для плавного появления контента
+            setTimeout(() => {
+                document.body.style.opacity = 1;
+            }, 100);
+        });
+
+        // Плавное появление при загрузке
+        document.body.style.opacity = 0;
+        document.body.style.transition = 'opacity 0.5s ease-in';
+    </script>
+</body>
+</html>
